@@ -76,10 +76,28 @@ function Button({ children, onClick }){
 
 function FormAddFriend(){
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState("https://i.pravatar.cc/48?");
+
+  function handleSubmit(e){
+    e.preventDefault();
+
+    if(!name || !image) return;
+
+    const id = crypto.randomUUID();
+    const newFriend = {
+      id,
+      name,
+      balance: 0,
+      image: `${image}=${id}`
+    }
+    console.log(newFriend);
+
+    setName("");
+    setImage("https://i.pravatar.cc/48?");
+  }
   
   return (
-    <form className="form-add-friend">
+    <form className="form-add-friend" onSubmit={handleSubmit}>
       {/* We need to get the value of this input field into our application. How do we do that? -> We use controlled elements */}
       {/* We will have one piece of state variable for the input field and then have the value of that input field synced with that state */}
       <label>🧑‍🤝‍🧑Friend Name: </label>
