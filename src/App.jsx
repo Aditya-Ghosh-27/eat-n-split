@@ -32,7 +32,7 @@ export default function App(){
       <div className="sidebar">
         <FriendsList />
         {showAddFriend && <FormAddFriend />}
-        {<Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add Friend"}</Button>}
+        <Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add Friend"}</Button>
       </div>
       <FormSplitBill />
     </div>
@@ -68,20 +68,25 @@ function Friend({ friend }){
   )
 }
 
-function Button({children, onClick}){
+function Button({ children, onClick }){
   return (
     <button onClick={onClick} className="button">{children}</button>
   )
 }
 
 function FormAddFriend(){
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  
   return (
     <form className="form-add-friend">
+      {/* We need to get the value of this input field into our application. How do we do that? -> We use controlled elements */}
+      {/* We will have one piece of state variable for the input field and then have the value of that input field synced with that state */}
       <label>🧑‍🤝‍🧑Friend Name: </label>
-      <input type="text"/>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
 
       <label>🌇 Image URL</label>
-      <input type="text" />
+      <input type="text" value={image} onChange={(e) => setImage(e.target.value)}/>
 
       <Button>Add</Button>
     </form>
