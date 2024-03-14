@@ -22,16 +22,23 @@ const initialFriends = [
 ];
 
 export default function App(){
+  const [friends, setFriends] = useState(initialFriends);
   const [showAddFriend, setShowAddFriend] = useState(false);
 
   function handleShowAddFriend(){
     setShowAddFriend(show => !show);
   }
+
+  function handleAddFriend( friend ){
+    setFriends((friends) => [...friends, friend]);
+    setShowAddFriend(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {showAddFriend && <FormAddFriend />}
+        <FriendsList friends={friends}/>
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend}/>}
         <Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add Friend"}</Button>
       </div>
       <FormSplitBill />
@@ -39,8 +46,7 @@ export default function App(){
   )
 }
 
-function FriendsList(){
-  const friends = initialFriends;
+function FriendsList({ friends }){
 
   return (
     <ul>
@@ -74,7 +80,7 @@ function Button({ children, onClick }){
   )
 }
 
-function FormAddFriend(){
+function FormAddFriend({ onAddFriend }){
   const [name, setName] = useState("");
   const [image, setImage] = useState("https://i.pravatar.cc/48?");
 
@@ -90,7 +96,7 @@ function FormAddFriend(){
       balance: 0,
       image: `${image}=${id}`
     }
-    console.log(newFriend);
+    onAddFriend(newFriend);
 
     setName("");
     setImage("https://i.pravatar.cc/48?");
@@ -98,8 +104,7 @@ function FormAddFriend(){
   
   return (
     <form className="form-add-friend" onSubmit={handleSubmit}>
-      {/* We need to get the value of this input field into our application. How do we do that? -> We use controlled elements */}
-      {/* We will have one piece of state variable for the input field and then have the value of that input field synced with that state */}
+      
       <label>🧑‍🤝‍🧑Friend Name: </label>
       <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
 
