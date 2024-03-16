@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+import { useState } from "react";
 
 const initialFriends = [
   {
@@ -219,7 +219,7 @@ function FormSplitBill({ selectedFriend, onSplitBill }) {
         onChange={(e) => setWhoIsPaying((e) => e.target.value)}
       >
         <option value="user">You</option>
-        <option value="friend">X</option>
+        <option value="friend">{selectedFriend.name}</option>
       </select>
 
       <Button>Split Bill</Button>
